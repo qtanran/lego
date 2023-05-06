@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import UserProfile from '@/components/UserProfile.vue'
+</script>
 
 <template>
   <el-container>
@@ -6,6 +8,7 @@
       <div class="page-title">
         <router-link to="/"> 慕课乐高 </router-link>
       </div>
+      <user-profile />
     </el-header>
     <el-main>
       <router-view />
@@ -17,6 +20,9 @@
 <style scoped lang="scss">
 .el-header {
   background: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .page-title {
     color: #fff;

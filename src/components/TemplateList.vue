@@ -29,8 +29,8 @@ defineProps({
             </div>
           </div>
           <div class="description-detail">
-            <span>作者：Test</span>
-            <span class="user-number">0</span>
+            <span>作者：{{ item.author }}</span>
+            <span class="user-number">{{ item.copiedCount }}</span>
           </div>
         </el-card>
       </el-col>

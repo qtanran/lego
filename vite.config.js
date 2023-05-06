@@ -21,8 +21,6 @@ export default defineConfig({
   },
 
   resolve: {
-    // 在最后加上 .vue
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     alias: {
       '@': join(__dirname, '/src')
     }
