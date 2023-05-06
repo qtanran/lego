@@ -1,13 +1,13 @@
 <script setup>
 import TemplateList from '../components/TemplateList.vue'
-import { useStore } from '@/store'
+import { useTemplatesStore } from '@/store/templates.js'
 
-const store = useStore()
+const templatesStore = useTemplatesStore()
 </script>
 
 <template>
   <div class="content-container">
-    <template-list :list="store.templates" />
+    <template-list :list="templatesStore.templates" />
   </div>
 </template>
 

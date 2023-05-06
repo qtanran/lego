@@ -45,20 +45,11 @@ const testData = [
   }
 ]
 
-export const useStore = defineStore('store', {
+export const useTemplatesStore = defineStore('templatesStore', {
   state: () => ({
-    templates: testData,
-    user: { isLogin: false }
+    templates: testData
   }),
   getters: {
     getTemplateById: state => id => state.templates.find(t => t.id === id)
-  },
-  actions: {
-    login() {
-      this.user = { ...this.user, isLogin: true, userName: 'viking' }
-    },
-    logout() {
-      this.user = { isLogin: false }
-    }
   }
 })
