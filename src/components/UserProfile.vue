@@ -22,7 +22,7 @@ const logout = () => {
   ElMessage.success('退出登录成功，2秒后跳转到首页')
   setTimeout(() => {
     router.push('/')
-  })
+  }, 2000)
 }
 </script>
 

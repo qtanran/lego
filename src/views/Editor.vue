@@ -1,7 +1,12 @@
 <script setup>
 import { useEditorStore } from '@/store/editor.js'
+import LText from '@/components/LText.vue'
 
 const editorStore = useEditorStore()
+
+const componentsObj = {
+  'l-text': LText
+}
 </script>
 
 <template>
@@ -13,9 +18,12 @@ const editorStore = useEditorStore()
       <el-main class="preview-container">
         <p>画布区域</p>
         <div class="preview-list" id="canvas-area">
-          <div v-for="component in editorStore.components" :key="component.id">
-            {{ component.props.text }}
-          </div>
+          <component
+            v-for="component in editorStore.components"
+            :key="component.id"
+            :is="componentsObj[component.name]"
+            v-bind="component.props"
+          />
         </div>
       </el-main>
       <el-aside width="300px" style="background: purple" class="settings-panel">组件属性</el-aside>
