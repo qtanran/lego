@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useEditorStore } from '@/store/editor.js'
+
+const editorStore = useEditorStore()
+</script>
 
 <template>
   <div class="editor">
@@ -8,7 +12,11 @@
       </el-aside>
       <el-main class="preview-container">
         <p>画布区域</p>
-        <div class="preview-list" id="canvas-area"></div>
+        <div class="preview-list" id="canvas-area">
+          <div v-for="component in editorStore.components" :key="component.id">
+            {{ component.props.text }}
+          </div>
+        </div>
       </el-main>
       <el-aside width="300px" style="background: purple" class="settings-panel">组件属性</el-aside>
     </el-container>
@@ -24,6 +32,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  background: #cccccc;
 
   .preview-list {
     padding: 0;
