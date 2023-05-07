@@ -16,6 +16,10 @@ export const useEditorStore = defineStore('editorStore', {
     components: testComponents,
     currentElement: ''
   }),
+  getters: {
+    getCurrentElement: state =>
+      state.components.find(component => component.id === state.currentElement)
+  },
   actions: {
     addComponent(props) {
       this.components.push({
@@ -23,6 +27,9 @@ export const useEditorStore = defineStore('editorStore', {
         name: 'l-text',
         props
       })
+    },
+    setActive(currentId) {
+      this.currentElement = currentId
     }
   }
 })

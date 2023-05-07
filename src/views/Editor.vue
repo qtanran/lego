@@ -3,6 +3,7 @@ import { useEditorStore } from '@/store/editor.js'
 import LText from '@/components/LText.vue'
 import ComponentsList from '@/components/ComponentsList.vue'
 import { defaultTextTemplates } from '@/defaultTemplates.js'
+import EditWrapper from '@/components/EditWrapper.vue'
 
 const editorStore = useEditorStore()
 
@@ -26,20 +27,33 @@ const addItem = props => {
       <el-main class="preview-container">
         <p>画布区域</p>
         <div class="preview-list" id="canvas-area">
-          <component
+          <edit-wrapper
+            @setActive="editorStore.setActive(component.id)"
             v-for="component in editorStore.components"
             :key="component.id"
-            :is="componentsObj[component.name]"
-            v-bind="component.props"
-          />
+            :id="component.id"
+            :active="
+              component.id === (editorStore.currentElement && editorStore.getCurrentElement.id)
+            "
+          >
+            <component :is="componentsObj[component.name]" v-bind="component.props" />
+          </edit-wrapper>
         </div>
       </el-main>
-      <el-aside width="300px" style="background: purple" class="settings-panel">组件属性</el-aside>
+      <el-aside width="300px" style="background: #fff" class="settings-panel">
+        组件属性
+        <pre>
+        {{ editorStore.getCurrentElement?.props }}
+        </pre>
+      </el-aside>
     </el-container>
   </div>
 </template>
 
 <style scoped lang="scss">
+.el-aside {
+  overflow: hidden;
+}
 .preview-container {
   padding: 24px;
   margin: 0;
