@@ -1,24 +1,20 @@
 <script setup>
-import { pick } from 'lodash-es'
 import { computed } from 'vue'
+import { pick } from 'lodash-es'
+import { textProps, textStylePropNames } from '@/defaultProps.js'
 
 const props = defineProps({
-  text: {
-    type: String
-  },
-  fontSize: {
-    type: String
-  },
   tag: {
     type: String,
     default: 'div'
-  }
+  },
+  ...textProps
 })
-const styleProps = computed(() => pick(props, ['fontSize']))
+const styleProps = computed(() => pick(props, textStylePropNames))
 </script>
 
 <template>
-  <component :is="tag" :style="styleProps" class="l-text-component">{{ text }}</component>
+  <component :is="tag" :style="styleProps" class="l-text-component">{{ props.text }}</component>
 </template>
 
 <style scoped lang="scss">
@@ -33,5 +29,6 @@ button.l-text-component {
 .l-text-component {
   box-sizing: border-box;
   white-space: pre-wrap;
+  position: relative !important;
 }
 </style>
