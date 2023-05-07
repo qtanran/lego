@@ -4,6 +4,7 @@ import LText from '@/components/LText.vue'
 import ComponentsList from '@/components/ComponentsList.vue'
 import { defaultTextTemplates } from '@/defaultTemplates.js'
 import EditWrapper from '@/components/EditWrapper.vue'
+import PropsTable from '@/components/PropsTable.vue'
 
 const editorStore = useEditorStore()
 
@@ -42,6 +43,10 @@ const addItem = props => {
       </el-main>
       <el-aside width="300px" style="background: #fff" class="settings-panel">
         组件属性
+        <props-table
+          v-if="editorStore.getCurrentElement?.props"
+          :props="editorStore.getCurrentElement?.props"
+        />
         <pre>
         {{ editorStore.getCurrentElement?.props }}
         </pre>
