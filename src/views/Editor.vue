@@ -1,19 +1,27 @@
 <script setup>
 import { useEditorStore } from '@/store/editor.js'
 import LText from '@/components/LText.vue'
+import ComponentsList from '@/components/ComponentsList.vue'
+import { defaultTextTemplates } from '@/defaultTemplates.js'
 
 const editorStore = useEditorStore()
 
 const componentsObj = {
   'l-text': LText
 }
+
+const addItem = props => {
+  editorStore.addComponent(props)
+}
 </script>
 
 <template>
   <div class="editor">
     <el-container>
-      <el-aside width="300px" style="background: yellow">
-        <div class="sidebar-container">组件列表</div>
+      <el-aside width="300px" style="background: #fff">
+        <div class="sidebar-container">
+          组件列表 <components-list :list="defaultTextTemplates" @onItemClick="addItem" />
+        </div>
       </el-aside>
       <el-main class="preview-container">
         <p>画布区域</p>
