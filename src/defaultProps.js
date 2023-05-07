@@ -55,5 +55,3 @@ export const transformToComponentProps = props =>
       default: item
     }
   })
-
-export const textProps = transformToComponentProps(textDefaultProps)

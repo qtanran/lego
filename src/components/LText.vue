@@ -1,20 +1,21 @@
 <script setup>
-import { computed } from 'vue'
-import { pick } from 'lodash-es'
-import { textProps, textStylePropNames } from '@/defaultProps.js'
+import useComponentCommon from '@/hooks/useComponentCommon.js'
+import { transformToComponentProps, textDefaultProps, textStylePropNames } from '@/defaultProps.js'
 
 const props = defineProps({
   tag: {
     type: String,
     default: 'div'
   },
-  ...textProps
+  ...transformToComponentProps(textDefaultProps)
 })
-const styleProps = computed(() => pick(props, textStylePropNames))
+const { styleProps, handleClick } = useComponentCommon(props, textStylePropNames)
 </script>
 
 <template>
-  <component :is="tag" :style="styleProps" class="l-text-component">{{ props.text }}</component>
+  <component :is="tag" :style="styleProps" @click="handleClick" class="l-text-component">{{
+    props.text
+  }}</component>
 </template>
 
 <style scoped lang="scss">
