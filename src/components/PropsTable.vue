@@ -2,12 +2,6 @@
 import { reduce } from 'lodash-es'
 import { computed } from 'vue'
 import { mapPropsToForms } from '@/propsMap.js'
-import { ElInput } from 'element-plus'
-import 'element-plus/theme-chalk/el-input.css'
-
-const componentObj = {
-  'el-input': ElInput
-}
 
 const props = defineProps({
   props: {
@@ -30,16 +24,29 @@ const finalProps = computed(() =>
     {}
   )
 )
-
-console.log(finalProps)
 </script>
 
 <template>
   <div class="props-table">
     <div v-for="(value, key) in finalProps" :key="key" class="prop-item">
-      <component v-if="value" :is="componentObj[value.component]" :value="value.value" />
+      <span class="label" v-if="value.text">{{ value.text }}</span>
+      <div class="prop-component">
+        <component :is="value.component" :value="value.value" v-bind="value.extraProps" />
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.prop-item {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.label {
+  width: 28%;
+}
+.prop-component {
+  width: 70%;
+}
+</style>
