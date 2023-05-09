@@ -16,7 +16,7 @@ const finalProps = computed(() =>
     (result, value, key) => {
       const item = mapPropsToForms[key]
       if (item) {
-        item.value = value
+        item.value = item.initalTransform ? item.initalTransform(value) : value
         result[key] = item
       }
       return result
@@ -29,9 +29,20 @@ const finalProps = computed(() =>
 <template>
   <div class="props-table">
     <div v-for="(value, key) in finalProps" :key="key" class="prop-item">
-      <span class="label" v-if="value.text">{{ value.text }}</span>
+      <span class="label">{{ value.text }}</span>
       <div class="prop-component">
-        <component :is="value.component" :value="value.value" v-bind="value.extraProps" />
+        <component :is="value.component" v-model="value.value" v-bind="value.extraProps">
+          <template v-if="value.options">
+            <component
+              :is="value.subComponent"
+              v-for="(option, k) in value.options"
+              :key="k"
+              :label="option.label"
+              :value="option.value"
+            >
+            </component>
+          </template>
+        </component>
       </div>
     </div>
   </div>
