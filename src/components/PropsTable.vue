@@ -18,18 +18,18 @@ const finalProps = computed(() =>
     (result, value, key) => {
       const item = mapPropsToForms[key]
       if (item) {
-        const { eventName = 'change', initalTransform } = item
-        const newItem = {
+        const { eventName = 'change', initalTransform, afterTransform } = item
+        result[key] = {
           ...item,
           value: initalTransform ? initalTransform(value) : value,
           eventName,
           events: {
             [eventName]: e => {
-              emits('change', { key, value: e })
+              console.log(e)
+              emits('change', { key, value: afterTransform ? afterTransform(e) : e })
             }
           }
         }
-        result[key] = newItem
       }
       return result
     },

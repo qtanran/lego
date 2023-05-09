@@ -60,6 +60,15 @@ export const useEditorStore = defineStore('editorStore', {
     },
     setActive(currentId) {
       this.currentElement = currentId
+    },
+    updateComponent({ key, value }) {
+      const updatedComponent = this.components.find(
+        component => component.id === this.currentElement
+      )
+      console.log(key, value)
+      if (updatedComponent) {
+        updatedComponent.props[key] = value
+      }
     }
   }
 })

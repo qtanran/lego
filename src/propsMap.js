@@ -19,18 +19,22 @@ export const mapPropsToForms = {
   text: {
     text: '文本',
     component: ElInput,
-    extraProps: { rows: 3, type: 'textarea' }
+    extraProps: { rows: 3, type: 'textarea' },
+    eventName: 'input'
   },
   fontSize: {
     text: '字号',
     component: ElInputNumber,
-    initalTransform: v => parseInt(v)
+    initalTransform: v => parseInt(v),
+    afterTransform: e => (e ? `${e}px` : '')
   },
   lineHeight: {
     text: '行高',
     component: ElSlider,
     extraProps: { min: 0, max: 3, step: 0.1 },
-    initalTransform: v => parseFloat(v)
+    eventName: 'input',
+    initalTransform: v => parseFloat(v),
+    afterTransform: e => e.toString()
   },
   textAlign: {
     component: ElRadioGroup,

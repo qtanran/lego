@@ -17,7 +17,7 @@ const addItem = props => {
 }
 
 const handleChange = e => {
-  console.log('event', e)
+  editorStore.updateComponent(e)
 }
 </script>
 
