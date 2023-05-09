@@ -10,14 +10,26 @@ const props = defineProps({
   }
 })
 
+const emits = defineEmits(['change'])
+
 const finalProps = computed(() =>
   reduce(
     props.props,
     (result, value, key) => {
       const item = mapPropsToForms[key]
       if (item) {
-        item.value = item.initalTransform ? item.initalTransform(value) : value
-        result[key] = item
+        const { eventName = 'change', initalTransform } = item
+        const newItem = {
+          ...item,
+          value: initalTransform ? initalTransform(value) : value,
+          eventName,
+          events: {
+            [eventName]: e => {
+              emits('change', { key, value: e })
+            }
+          }
+        }
+        result[key] = newItem
       }
       return result
     },
@@ -31,7 +43,12 @@ const finalProps = computed(() =>
     <div v-for="(value, key) in finalProps" :key="key" class="prop-item">
       <span class="label">{{ value.text }}</span>
       <div class="prop-component">
-        <component :is="value.component" v-model="value.value" v-bind="value.extraProps">
+        <component
+          :is="value.component"
+          v-model="value.value"
+          v-bind="value.extraProps"
+          v-on="value.events"
+        >
           <template v-if="value.options">
             <component
               :is="value.subComponent"

@@ -15,6 +15,10 @@ const componentsObj = {
 const addItem = props => {
   editorStore.addComponent(props)
 }
+
+const handleChange = e => {
+  console.log('event', e)
+}
 </script>
 
 <template>
@@ -46,6 +50,7 @@ const addItem = props => {
         <props-table
           v-if="editorStore.getCurrentElement?.props"
           :props="editorStore.getCurrentElement?.props"
+          @change="handleChange"
         />
         <pre>
         {{ editorStore.getCurrentElement?.props }}
