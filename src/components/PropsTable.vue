@@ -1,7 +1,8 @@
 <script setup>
 import { reduce } from 'lodash-es'
 import { computed } from 'vue'
-import { mapPropsToForms } from '@/propsMap.js'
+import { mapPropsToForms } from '@/propsMap.jsx'
+import RenderVnode from '@/components/RenderVnode.js'
 
 const props = defineProps({
   props: {
@@ -25,7 +26,6 @@ const finalProps = computed(() =>
           eventName,
           events: {
             [eventName]: e => {
-              console.log(e)
               emits('change', { key, value: afterTransform ? afterTransform(e) : e })
             }
           }
@@ -36,6 +36,7 @@ const finalProps = computed(() =>
     {}
   )
 )
+console.log(finalProps.value)
 </script>
 
 <template>
@@ -54,9 +55,12 @@ const finalProps = computed(() =>
               :is="value.subComponent"
               v-for="(option, k) in value.options"
               :key="k"
-              :label="option.label"
+              :label="
+                typeof option.label === 'string' ? option.label : option.label.children[0].children
+              "
               :value="option.value"
             >
+              <render-vnode :vNode="option.label" />
             </component>
           </template>
         </component>

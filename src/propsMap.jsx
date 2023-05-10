@@ -15,6 +15,19 @@ import 'element-plus/theme-chalk/el-radio-button.css'
 import 'element-plus/theme-chalk/el-select.css'
 import 'element-plus/theme-chalk/el-option.css'
 
+const fontFamilyArr = [
+  { label: '宋体', value: 'SimSun,STSong' },
+  { label: '黑体', value: 'SimHei,STHeiti' },
+  { label: '楷体', value: 'KaiTi,STKaiti' },
+  { label: '仿宋', value: 'FangSong,STFangsong' }
+]
+const fontFamilyOptions = fontFamilyArr.map(font => {
+  return {
+    value: font.value,
+    label: <span style={{ fontFamily: font.value }}>{font.label}</span>
+  }
+})
+
 export const mapPropsToForms = {
   text: {
     text: '文本',
@@ -50,12 +63,6 @@ export const mapPropsToForms = {
     component: ElSelect,
     subComponent: ElOption,
     text: '字体',
-    options: [
-      { value: '', label: '无' },
-      { label: '宋体', value: '"SimSun","STSong"' },
-      { label: '黑体', value: '"SimHei","STHeiti"' },
-      { label: '楷体', value: '"KaiTi","STKaiti"' },
-      { label: '仿宋', value: '"FangSong","STFangsong"' }
-    ]
+    options: [{ value: '', label: '无' }, ...fontFamilyOptions]
   }
 }

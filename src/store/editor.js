@@ -11,7 +11,7 @@ export const testComponents = [
       color: 'red',
       'lineHeight': '1',
       textAlign: 'left',
-      fontFamily: ''
+      fontFamily: 'SimSun,STSong'
     }
   },
   {
