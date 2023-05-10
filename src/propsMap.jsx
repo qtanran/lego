@@ -5,7 +5,8 @@ import {
   ElRadioGroup,
   ElRadioButton,
   ElSelect,
-  ElOption
+  ElOption,
+  ElColorPicker
 } from 'element-plus'
 import 'element-plus/theme-chalk/el-input.css'
 import 'element-plus/theme-chalk/el-input-number.css'
@@ -14,6 +15,8 @@ import 'element-plus/theme-chalk/el-radio-group.css'
 import 'element-plus/theme-chalk/el-radio-button.css'
 import 'element-plus/theme-chalk/el-select.css'
 import 'element-plus/theme-chalk/el-option.css'
+import 'element-plus/theme-chalk/el-color-picker.css'
+import 'element-plus/theme-chalk/el-button.css'
 
 const fontFamilyArr = [
   { label: '宋体', value: 'SimSun,STSong' },
@@ -64,5 +67,10 @@ export const mapPropsToForms = {
     subComponent: ElOption,
     text: '字体',
     options: [{ value: '', label: '无' }, ...fontFamilyOptions]
+  },
+  color: {
+    component: ElColorPicker,
+    text: '字体颜色',
+    extraProps: { showAlpha: true }
   }
 }
