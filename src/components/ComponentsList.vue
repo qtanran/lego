@@ -23,6 +23,9 @@ const onItemClick = data => {
     >
       <l-text v-bind="item"></l-text>
     </div>
+    <el-upload>
+      <el-button type="primary">上传图片</el-button>
+    </el-upload>
   </div>
 </template>
 
