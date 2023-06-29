@@ -51,12 +51,8 @@ export const useEditorStore = defineStore('editorStore', {
       state.components.find(component => component.id === state.currentElement)
   },
   actions: {
-    addComponent(props) {
-      this.components.push({
-        id: uuidv4(),
-        name: 'l-text',
-        props
-      })
+    addComponent(component) {
+      this.components.push(component)
     },
     setActive(currentId) {
       this.currentElement = currentId

@@ -1,6 +1,7 @@
 <script setup>
 import { useEditorStore } from '@/store/editor.js'
 import LText from '@/components/LText.vue'
+import LImage from '@/components/LImage.vue'
 import ComponentsList from '@/components/ComponentsList.vue'
 import { defaultTextTemplates } from '@/defaultTemplates.js'
 import EditWrapper from '@/components/EditWrapper.vue'
@@ -9,11 +10,12 @@ import PropsTable from '@/components/PropsTable.vue'
 const editorStore = useEditorStore()
 
 const componentsObj = {
-  'l-text': LText
+  'l-text': LText,
+  'l-image': LImage
 }
 
-const addItem = props => {
-  editorStore.addComponent(props)
+const addItem = component => {
+  editorStore.addComponent(component)
 }
 
 const handleChange = e => {

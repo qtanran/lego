@@ -1,5 +1,9 @@
 <script setup>
+import { ElMessage } from 'element-plus'
+import { v4 as uuidV4 } from 'uuid'
 import LText from '@/components/LText.vue'
+import { imageDefaultProps } from '@/defaultProps.js'
+
 defineProps({
   list: {
     type: Array,
@@ -8,8 +12,23 @@ defineProps({
 })
 
 const emits = defineEmits(['on-item-click'])
-const onItemClick = data => {
-  emits('on-item-click', data)
+const onItemClick = props => {
+  emits('on-item-click', {
+    name: 'l-text',
+    id: uuidV4(),
+    props
+  })
+}
+const onImageUploaded = res => {
+  ElMessage.success('上传成功')
+  emits('on-item-click', {
+    name: 'l-image',
+    id: uuidV4(),
+    props: {
+      ...imageDefaultProps,
+      src: res.data.urls[0]
+    }
+  })
 }
 </script>
 
@@ -23,7 +42,7 @@ const onItemClick = data => {
     >
       <l-text v-bind="item"></l-text>
     </div>
-    <el-upload>
+    <el-upload action="http://localhost:7001/api/utils/upload-img" :on-success="onImageUploaded">
       <el-button type="primary">上传图片</el-button>
     </el-upload>
   </div>
