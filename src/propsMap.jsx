@@ -30,6 +30,11 @@ const fontFamilyOptions = fontFamilyArr.map(font => {
     label: <span style={{ fontFamily: font.value }}>{font.label}</span>
   }
 })
+const pxToNumberHandler = {
+  component: ElInputNumber,
+  initalTransform: v => parseInt(v),
+  afterTransform: e => (e ? `${e}px` : '')
+}
 
 export const mapPropsToForms = {
   text: {
@@ -40,9 +45,7 @@ export const mapPropsToForms = {
   },
   fontSize: {
     text: '字号',
-    component: ElInputNumber,
-    initalTransform: v => parseInt(v),
-    afterTransform: e => (e ? `${e}px` : '')
+    ...pxToNumberHandler
   },
   lineHeight: {
     text: '行高',
@@ -67,6 +70,10 @@ export const mapPropsToForms = {
     subComponent: ElOption,
     text: '字体',
     options: [{ value: '', label: '无' }, ...fontFamilyOptions]
+  },
+  width: {
+    text: '宽度',
+    ...pxToNumberHandler
   },
   color: {
     component: ElColorPicker,
