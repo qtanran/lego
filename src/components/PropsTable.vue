@@ -36,6 +36,7 @@ const finalProps = computed(() =>
     {}
   )
 )
+console.log(finalProps.value)
 </script>
 
 <template>

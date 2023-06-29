@@ -8,6 +8,7 @@ import {
   ElOption,
   ElColorPicker
 } from 'element-plus'
+import ImageProcesser from '@/components/ImageProcesser.vue'
 import 'element-plus/theme-chalk/el-input.css'
 import 'element-plus/theme-chalk/el-input-number.css'
 import 'element-plus/theme-chalk/el-slider.css'
@@ -79,5 +80,8 @@ export const mapPropsToForms = {
     component: ElColorPicker,
     text: '字体颜色',
     extraProps: { showAlpha: true }
+  },
+  src: {
+    component: ImageProcesser
   }
 }

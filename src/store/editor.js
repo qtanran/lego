@@ -38,6 +38,14 @@ export const testComponents = [
       textAlign: 'left',
       fontFamily: ''
     }
+  },
+  {
+    id: uuidv4(),
+    name: 'l-image',
+    props: {
+      src: 'http://lego-backend-qu.oss-cn-beijing.aliyuncs.com/test%5CfCn_Yl.png',
+      width: '100px'
+    }
   }
 ]
 
