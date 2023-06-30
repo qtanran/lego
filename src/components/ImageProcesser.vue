@@ -1,6 +1,7 @@
 <script setup>
 import { ElMessage } from 'element-plus'
-import { computed } from 'vue'
+import { computed, ref, watch, nextTick } from 'vue'
+import Cropper from 'cropperjs'
 
 const props = defineProps({
   modelValue: {
@@ -15,8 +16,25 @@ const props = defineProps({
     default: false
   }
 })
+
 const emits = defineEmits(['change', 'uploaded'])
 const backgroundUrl = computed(() => `url(${props.modelValue})`)
+const showModal = ref(false)
+const cropperImg = ref(null)
+let cropper = null
+watch(showModal, async newValue => {
+  if (newValue) {
+    await nextTick()
+    cropperImg.value &&
+      new Cropper(cropperImg.value, {
+        crop(event) {
+          console.log(event)
+        }
+      })
+  } else {
+    cropper?.destroy()
+  }
+})
 
 const handleFileUploaded = res => {
   ElMessage.success('上传成功')
@@ -43,9 +61,21 @@ const handleDelete = () => {
       >
         <el-button type="primary">上传图片</el-button>
       </el-upload>
+      <el-button @click="showModal = true">裁剪图片</el-button>
       <el-button v-if="showDelete" type="danger" @click="handleDelete">删除图片</el-button>
     </div>
   </div>
+  <el-dialog v-model="showModal" title="裁剪图片" width="50%">
+    <div class="image-cropper">
+      <img :src="props.modelValue" id="processed-image" ref="cropperImg" src="" alt="" />
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="showModal = false">取消</el-button>
+        <el-button type="primary" @click="showModal = false"> 确认 </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -73,6 +103,10 @@ const handleDelete = () => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+  .image-cropper img {
+    display: block;
+    max-width: 100%;
   }
 }
 </style>

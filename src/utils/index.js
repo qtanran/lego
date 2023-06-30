@@ -1,3 +1,8 @@
+/**
+ * 获取图片宽高
+ * @param url
+ * @returns {Promise<unknown>}
+ */
 export const getImageDimensions = url => {
   return new Promise((resolve, reject) => {
     const img = new Image()
