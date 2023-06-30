@@ -22,13 +22,20 @@ const backgroundUrl = computed(() => `url(${props.modelValue})`)
 const showModal = ref(false)
 const cropperImg = ref(null)
 let cropper = null
+let cropData = null
 watch(showModal, async newValue => {
   if (newValue) {
     await nextTick()
     cropperImg.value &&
       new Cropper(cropperImg.value, {
         crop(event) {
-          console.log(event)
+          const { x, y, width, height } = event.detail
+          cropData = {
+            x: Math.floor(x),
+            y: Math.floor(y),
+            width: Math.floor(width),
+            height: Math.floor(height)
+          }
         }
       })
   } else {
@@ -36,14 +43,35 @@ watch(showModal, async newValue => {
   }
 })
 
+/**
+ * 图片上传成功
+ * @param res
+ */
 const handleFileUploaded = res => {
   ElMessage.success('上传成功')
   emits('change', res.data.urls[0])
   emits('uploaded', res)
 }
 
+/**
+ * 删除图片按钮的点击
+ */
 const handleDelete = () => {
   emits('change', '')
+}
+
+/**
+ * 处理图片的裁剪
+ */
+const baseImageUrl = computed(() => props.modelValue.split('?')[0])
+const handleImgCut = () => {
+  if (cropData) {
+    const { x, y, width, height } = cropData
+    const cropperURL =
+      baseImageUrl.value + `?x-oss-process=image/crop,x_${x},y_${y},w_${width},h_${height}`
+    emits('change', cropperURL)
+  }
+  showModal.value = false
 }
 </script>
 
@@ -67,12 +95,12 @@ const handleDelete = () => {
   </div>
   <el-dialog v-model="showModal" title="裁剪图片" width="50%">
     <div class="image-cropper">
-      <img :src="props.modelValue" id="processed-image" ref="cropperImg" src="" alt="" />
+      <img :src="baseImageUrl" id="processed-image" ref="cropperImg" src="" alt="" />
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="showModal = false">取消</el-button>
-        <el-button type="primary" @click="showModal = false"> 确认 </el-button>
+        <el-button type="primary" @click="handleImgCut"> 确认 </el-button>
       </span>
     </template>
   </el-dialog>
